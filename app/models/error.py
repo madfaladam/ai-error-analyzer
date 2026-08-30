@@ -31,6 +31,11 @@ class ParsedError(BaseModel):
     raw_log: str
 
 
+class AnalysisSource(BaseModel):
+    source: str
+    relevance: float = Field(..., ge=-1, le=1)
+
+
 class ErrorAnalysis(BaseModel):
     category: ErrorCategory
     summary: str
@@ -38,3 +43,4 @@ class ErrorAnalysis(BaseModel):
     suggested_fix: str
     confidence: float = Field(..., ge=0, le=1)
     parsed_error: ParsedError
+    sources: list[AnalysisSource] = Field(default_factory=list)
