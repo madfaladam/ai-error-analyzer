@@ -1,0 +1,13 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - vector_data:/app/vector_store
+    restart: unless-stopped
+
+volumes:
+  vector_data:
