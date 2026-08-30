@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8000";
+const API_URL = window.__API_URL__ || "";
 
 const analyzeButton = document.getElementById("analyze");
 const errorInput = document.getElementById("error");
