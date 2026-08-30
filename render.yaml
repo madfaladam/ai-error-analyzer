@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: ai-error-analyzer
+    runtime: docker
+    plan: free
+    branch: main
+    healthCheckPath: /health
+    envVars:
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: OPENROUTER_MODEL
+        value: deepseek/deepseek-chat
+      - key: APP_ENV
+        value: production
+      - key: SKIP_KNOWLEDGE_INGEST
+        value: "false"
