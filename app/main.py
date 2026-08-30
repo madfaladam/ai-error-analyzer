@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 
+from app.api.routes import router as analyzer_router
 from app.core.config import settings
 
 
@@ -8,6 +9,8 @@ app = FastAPI(
     description="AI-powered developer error analyzer using LLM and RAG.",
     version="0.1.0",
 )
+
+app.include_router(analyzer_router)
 
 
 @app.get("/health", tags=["system"])
