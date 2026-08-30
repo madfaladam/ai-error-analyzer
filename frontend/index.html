@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Error Analyzer</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="container">
+    <header>
+      <p class="eyebrow">AI DEVELOPER TOOL</p>
+      <h1>AI Error Analyzer</h1>
+      <p class="subtitle">Turn stack traces into actionable diagnoses using LLM + semantic retrieval.</p>
+    </header>
+
+    <section class="card">
+      <label for="language">Language</label>
+      <select id="language">
+        <option value="">Auto detect</option>
+        <option value="python">Python</option>
+        <option value="javascript">JavaScript / TypeScript</option>
+        <option value="csharp">C#</option>
+      </select>
+
+      <label for="error">Paste your error</label>
+      <textarea id="error" placeholder="Paste a stack trace or error message here..."></textarea>
+
+      <button id="analyze">Analyze Error</button>
+      <p id="status" class="status"></p>
+    </section>
+
+    <section id="result" class="card result hidden">
+      <div class="category" id="category"></div>
+      <h2>Diagnosis</h2>
+
+      <div class="field">
+        <h3>Summary</h3>
+        <p id="summary"></p>
+      </div>
+
+      <div class="field">
+        <h3>Root Cause</h3>
+        <p id="rootCause"></p>
+      </div>
+
+      <div class="field">
+        <h3>Suggested Fix</h3>
+        <pre id="suggestedFix"></pre>
+      </div>
+
+      <div class="confidence-row">
+        <strong>Confidence</strong>
+        <span id="confidence"></span>
+      </div>
+
+      <div class="field">
+        <h3>Sources</h3>
+        <ul id="sources"></ul>
+      </div>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
