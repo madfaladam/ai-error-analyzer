@@ -4,7 +4,7 @@ from typing import Any
 import httpx
 
 from app.core.config import settings
-from app.models.error import ErrorAnalysis, ParsedError
+from app.models.error import AnalysisSource, ErrorAnalysis, ParsedError
 from app.services.vector_store import Document
 
 
@@ -34,9 +34,10 @@ class OpenRouterService:
         if not settings.openrouter_api_key:
             raise LLMServiceError("OPENROUTER_API_KEY is not configured")
 
+        context_documents = context_documents or []
         context = "\n\n".join(
             f"SOURCE: {doc.source}\nRELEVANCE: {score:.3f}\n{doc.content}"
-            for doc, score in (context_documents or [])
+            for doc, score in context_documents
         )
 
         user_content = {
@@ -79,9 +80,14 @@ class OpenRouterService:
             data: dict[str, Any] = response.json()
             content = data["choices"][0]["message"]["content"]
             parsed = json.loads(content)
+            sources = [
+                AnalysisSource(source=doc.source, relevance=score)
+                for doc, score in context_documents
+            ]
             return ErrorAnalysis(
                 category=error.category,
                 parsed_error=error,
+                sources=sources,
                 **parsed,
             )
         except (KeyError, IndexError, TypeError, ValueError) as exc:
